@@ -7,16 +7,14 @@ import org.apache.logging.log4j.Logger;
 import org.booking.HttpsMethods;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
+import reporting.ExtentTestManager;
 import reporting.TestListeners;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 
 import java.io.File;
-import java.sql.SQLOutput;
 
 @Listeners(TestListeners.class)
-
 public class BaseTest {
     Logger log = LogManager.getLogger(BaseTest.class.getName());
     HttpsMethods methods;
@@ -24,7 +22,7 @@ public class BaseTest {
     @BeforeSuite
     public void setUp() {
         methods = new HttpsMethods();
-        File logDir = new File("logFolder");
+        File logDir = new File("logs");
         if (!logDir.exists()) {
             log.info(" Creating logging directory ");
             logDir.mkdir();
@@ -33,10 +31,12 @@ public class BaseTest {
     }
 
     @BeforeMethod
-    public void getToken() {
-        System.out.println(" &*&************************");
+    public void getHealthPing() {
+
+        log.info(" ****** CHECKING HEALTH ********");
         HttpsMethods.getPing();
         Assert.assertEquals(HttpsMethods.getPing().statusCode(), HttpStatus.SC_CREATED);
+        log.info(" ****** CHECKING HEALTH PASS  ******** ");
 
     }
 

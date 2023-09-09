@@ -2,6 +2,8 @@ package org.bookingTest;
 
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
+import org.booking.Commons;
+import org.booking.HttpsMethods;
 import org.codehaus.groovy.transform.stc.ExtensionMethodNode;
 import org.testng.Assert;
 import reporting.ExtentTestManager;
@@ -29,7 +31,7 @@ public class Test_getBooking extends BaseTest {
     @Test(description = " To validate the status code of get especific booking ")
     public void tc02_getbookingId() throws IOException {
         ExtentTestManager.getTest().info("  tc02_getbookingId body is");
-        response = methods.get("11");
+        response = HttpsMethods.get(String.valueOf(Commons.bookingid));
         ExtentTestManager.getTest().info(response.getBody().asPrettyString());
         Assert.assertEquals(response.statusCode(), HttpStatus.SC_OK);
     }

@@ -21,6 +21,7 @@ public class HttpsMethods {
 
     public static String authtoken() {
 
+        //https://restful-booker.herokuapp.com/ping
         System.out.println();
         token = given().baseUri(Util.readConfig("baseUri")).headers(Commons.getHeaders()).
                 body(new File(System.getProperty("user.dir") + Commons.tokenJsonpath)).
@@ -29,10 +30,8 @@ public class HttpsMethods {
         return token;
     }
 
-     //https://restful-booker.herokuapp.com/ping
 
-    public static Response getPing()
-    {
+    public static Response getPing() {
         return given().log().all().baseUri(Util.readConfig("baseUri")).when().
                 get(Util.readConfig("pingpath"));
     }
@@ -64,7 +63,16 @@ public class HttpsMethods {
         return given().headers(Commons.getHeaders()).baseUri(Util.readConfig("baseUri")).
                 body(booking).
                 when().
-                put(Util.readConfig("path") + Util.readConfig("bookingid"));
+                put(Util.readConfig("path") + Commons.bookingid);
+
+    }
+
+    public static Response delete(String id) {
+        ExtentTestManager.getTest().
+                info(" URI IS >>> " +
+                        Util.readConfig("baseUri") + "" + Util.readConfig("path") + id);
+        System.out.println(Commons.getHeaders());
+        return given().baseUri(Util.readConfig("baseUri")).headers(Commons.getHeaders()).when().delete(Util.readConfig("path") + id);
 
     }
 

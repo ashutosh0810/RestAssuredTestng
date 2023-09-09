@@ -16,14 +16,12 @@ public class Commons {
     public static String tokenJsonpath="\\src\\main\\resources\\token.json";
     public static String author = "ashutosh ";
     public static String reportFilename = "Booking Api Automation";
+    public static int bookingid;
     // Headers for the post
-
-    static HashMap<String, String> headersMap = new HashMap<>();
+    public static HashMap<String, String> headersMap = new HashMap<>();
 
 
     // This will be the common data using fake
-    //
-
     public static String firstName = faker.name().firstName();
     public static String lastName = faker.name().lastName();
     public static boolean depositpaid = faker.bool().bool();

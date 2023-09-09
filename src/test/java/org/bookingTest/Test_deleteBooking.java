@@ -6,6 +6,7 @@ import org.booking.Commons;
 import org.booking.HttpsMethods;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import reporting.ExtentTestManager;
 import reporting.TestListeners;
 import org.testng.annotations.Listeners;
 
@@ -16,6 +17,10 @@ public class Test_deleteBooking extends BaseTest {
     @Test
     public void tc01_deleteBooking() {
         response = HttpsMethods.delete(String.valueOf(Commons.bookingid));
+        log.info(" Delete method body is " + response.getBody().asPrettyString());
+        ExtentTestManager.getTest().info(" Delete response is " + response.getStatusCode());
+        ExtentTestManager.getTest().info(" Delete response body is " + response.getBody());
+        log.info(" asserting status as 201 ");
         Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_CREATED);
     }
 

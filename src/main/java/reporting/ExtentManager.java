@@ -11,6 +11,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+// This package will initiate the extent reports
 public class ExtentManager {
     static Logger log = LogManager.getLogger(ExtentManager.class);
     private static ExtentReports extentReports;

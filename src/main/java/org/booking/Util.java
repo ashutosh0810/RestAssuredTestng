@@ -11,6 +11,7 @@ import java.util.Random;
 
 public class Util {
 
+    // This will contains generics functions and reusable functions
     private static Properties properties;
 
 

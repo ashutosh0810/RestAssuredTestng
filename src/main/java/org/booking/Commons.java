@@ -5,23 +5,25 @@ import com.github.javafaker.Faker;
 import java.util.HashMap;
 import java.util.Random;
 
+// This class will store the common values and constant values that can be used across the framework
 public class Commons {
+
+
+    // Using faker class for getiing the random values ;
 
     private static Faker faker = new Faker();
     private static final Random RANDOM = new Random();
 
-    public static String environment = "QA";
     public static String configFilepath = "src\\main\\resources\\testConfig.properties";
-    //C:\Users\ashutoshsingh03\Documents\AshutoshKumarSingh\BookingApp\src\main\resources\token.json
     public static String tokenJsonpath="\\src\\main\\resources\\token.json";
     public static String author = "ashutosh ";
     public static String reportFilename = "Booking Api Automation";
     public static int bookingid;
-    // Headers for the post
+    // storing Headers for the all the request whereever it is required
     public static HashMap<String, String> headersMap = new HashMap<>();
 
 
-    // This will be the common data using fake
+    // Generating fake datas .
     public static String firstName = faker.name().firstName();
     public static String lastName = faker.name().lastName();
     public static boolean depositpaid = faker.bool().bool();
@@ -32,9 +34,10 @@ public class Commons {
     public static String checkIn = "2018-01-01";
     public static String checkOut = "2028-01-01";
 
+    // Intializing the headers and value we are taking via Config file
     public static HashMap<String, String> getHeaders() {
-        headersMap.put("Content-Type", "application/json");
-        headersMap.put("Accept", "*/*");
+        headersMap.put("Content-Type", Util.readConfig("Content-Type"));
+        headersMap.put("Accept", Util.readConfig("Accept"));
         return headersMap;
     }
 

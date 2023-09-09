@@ -1,5 +1,6 @@
 package org.bookingTest;
 
+import Pojo.postResponse.CreateBookingResponse;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
@@ -19,43 +20,49 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 @Listeners(TestListeners.class)
+// This contains test cases for the post booking or Create booking
 public class Test_createBooking extends BaseTest {
 
     Logger log = LogManager.getLogger(Test_createBooking.class);
     Response response;
+    CreateBookingResponse createBookingResponse;
 
 
-    @Test
+    @Test(description = "Post request for creating the booking ")
     public void tc01_createbooking() throws IOException {
         log.info(" **** tc01_createbooking() *****");
         ExtentTestManager.getTest().info("tc01_createbooking Testing ");
         ExtentTestManager.getTest().info(" validating the status of tc01_createbooking");
         response = HttpsMethods.post();
         log.info(" POST bODY is " + response.getBody().asPrettyString());
+        ExtentTestManager.getTest().info("RESPONSE STATUS CODE " + response.getStatusCode());
+        ExtentTestManager.getTest().info(" RESPONSE BODY is " + response.getBody());
         Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_OK);
         // Storing booking id
-        Commons.bookingid=response.jsonPath().get("bookingid");
+        ExtentTestManager.getTest().info(" Booking id created " + response.jsonPath().get("bookingid"));
+        Commons.bookingid = response.jsonPath().get("bookingid");
     }
 
     @Test(description = "To validate the create Booking response schema")
     public void tc02_validateSchema() {
-
-        response = HttpsMethods.post();
-        response.then().assertThat().body("bookingid",Matchers.notNullValue());
-        //C:\Users\ashutoshsingh03\Documents\AshutoshKumarSingh\BookingApp\src\main\resources\postBookingresponse.json
+        log.info("tc02_validateSchema ");
+        ExtentTestManager.getTest().info(" Validating the entire schema ");
+        response.then().assertThat().body("bookingid", Matchers.notNullValue());
         response.then().assertThat().body(matchesJsonSchemaInClasspath("postBookingresponse.json"));
     }
 
     @Test(description = " To validate the header of response ")
     public void tc03_validateHeaders() {
         log.info(" tc03_validateHeaders To validate the header of response ");
+        log.info(" Headers are >>>> " + response.getHeaders());
+        ExtentTestManager.getTest().info(" Header info for create booking" + response.getHeaders());
         Assert.assertEquals(response.getHeader("Content-Type"), "application/json; charset=utf-8");
 
     }
 
     @Test(description = " To validate the body of json response  ")
 
-    public void tc04_validateBody() {
+    public void tc04_BasicCheck_validateBody() {
         log.info(" tc04_validateBody  To validate the body of json response ");
         ExtentTestManager.getTest().info(response.getBody().asPrettyString());
         log.info(" validate that object types are not null ");
@@ -64,5 +71,28 @@ public class Test_createBooking extends BaseTest {
         Assert.assertNotNull(response.body().jsonPath().get("booking.lastname"), "Last name should not be null");
         Assert.assertNotNull(response.body().jsonPath().get("booking.totalprice"), "price name should not be null");
         Assert.assertTrue(response.body().jsonPath().get("booking.depositpaid") instanceof Boolean);
+    }
+
+    @Test(description = " This test case will validate every object as we have passed while creating the post request ")
+    public void tc05_validateBody() {
+        createBookingResponse = response.as(CreateBookingResponse.class);
+        String Response_bookingId = createBookingResponse.getBookingid();
+        String res_FN = createBookingResponse.getBooking().getFirstname();
+        String res_LN = createBookingResponse.getBooking().getLastname();
+        String res_addNeed = createBookingResponse.getBooking().getAdditionalneeds();
+        boolean res_depositpaid = createBookingResponse.getBooking().isDepositpaid();
+        String res_checkinDate = createBookingResponse.getBooking().getBookingdates().getCheckin();
+        String res_checkoutDates = createBookingResponse.getBooking().getBookingdates().getCheckout();
+        log.info(" Response fetched using pojo  ");
+        log.info(res_FN + "  " + res_LN + "  " + res_addNeed + "  " + res_depositpaid + "  ");
+        ExtentTestManager.getTest().info(res_FN + " , " + res_LN + "  , " + res_addNeed + " , " + res_depositpaid + " ,  ");
+
+        Assert.assertEquals(res_FN, Commons.firstName);
+        Assert.assertEquals(res_LN, Commons.lastName);
+        Assert.assertEquals(res_addNeed, Commons.addNeeds);
+        Assert.assertEquals(res_depositpaid, Commons.depositpaid);
+        Assert.assertEquals(res_checkinDate, Commons.checkIn);
+        Assert.assertEquals(res_checkoutDates, Commons.checkOut);
+
     }
 }

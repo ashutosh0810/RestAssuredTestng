@@ -10,7 +10,7 @@ import reporting.TestListeners;
 import org.testng.annotations.Listeners;
 
 @Listeners(TestListeners.class)
-public class Test_editBooking extends BaseTest{
+public class Test_editBooking extends BaseTest {
 
     Response response;
 
@@ -18,13 +18,15 @@ public class Test_editBooking extends BaseTest{
     public void tc01_validateEdit() {
         ExtentTestManager.getTest().info("tc01_editbooking");
         response = HttpsMethods.put();
-        ExtentTestManager.getTest().info(response.getBody().asPrettyString());
+        log.info(" tc01_validateEdit " + response.getBody().asPrettyString());
+        ExtentTestManager.getTest().info("tc01_validateEdit" + response.getBody().asPrettyString());
         Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_OK);
     }
+
     @Test
-    public void tc02_validateEditBody()
-    {
-        ExtentTestManager.getTest().info(response.getBody().asPrettyString());
+    public void tc02_validateEditBody() {
+        log.info(" Validating the edit body and its object not be null ");
+        ExtentTestManager.getTest().info(" tc02_validateEditBody " + response.getBody().asPrettyString());
         Assert.assertNotNull(response.jsonPath().get("firstname"), "First name should not be null");
         Assert.assertNotNull(response.body().jsonPath().get("lastname"), "Last name should not be null");
         Assert.assertNotNull(response.body().jsonPath().get("totalprice"), "price name should not be null");

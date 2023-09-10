@@ -19,6 +19,8 @@ public class Test_editBooking extends BaseTest {
         ExtentTestManager.getTest().info("tc01_editbooking");
         response = HttpsMethods.put();
         log.info(" tc01_validateEdit " + response.getBody().asPrettyString());
+        log.info(" PUT BODY IS " + response.getBody().asPrettyString());
+        // logging the body
         ExtentTestManager.getTest().info("tc01_validateEdit" + response.getBody().asPrettyString());
         Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_OK);
     }

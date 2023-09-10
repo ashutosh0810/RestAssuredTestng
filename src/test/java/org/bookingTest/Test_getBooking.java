@@ -24,8 +24,8 @@ public class Test_getBooking extends BaseTest {
     public void tc01_getAllbookingId() throws IOException {
         ExtentTestManager.getTest().info(" Get all booking body is");
 
-        response = methods.get(Util.readConfig("path"), "");
-        log.info(" response is " + response.getBody().asPrettyString());
+        response = HttpsMethods.get(Util.readConfig("path"), "");
+       // log.info(" response is " + response.getBody().asPrettyString());
         ExtentTestManager.getTest().info(response.getBody().asPrettyString());
         Assert.assertEquals(response.statusCode(), HttpStatus.SC_OK);
     }

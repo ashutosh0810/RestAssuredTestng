@@ -15,24 +15,13 @@ public class Commons {
     private static final Random RANDOM = new Random();
 
     public static String configFilepath = "src\\main\\resources\\testConfig.properties";
-    public static String tokenJsonpath="\\src\\main\\resources\\token.json";
-    public static String author = "ashutosh ";
-    public static String reportFilename = "Booking Api Automation";
+    public static String tokenJsonfile = "\\src\\main\\resources\\token.json";
+
     public static int bookingid;
+
     // storing Headers for the all the request whereever it is required
     public static HashMap<String, String> headersMap = new HashMap<>();
-
-
-    // Generating fake datas .
-    public static String firstName = faker.name().firstName();
-    public static String lastName = faker.name().lastName();
-    public static boolean depositpaid = faker.bool().bool();
-    public static int totalprice = faker.number().numberBetween(0, 12);
     static String[] needs = {"Breakfast", "Extra bed", "Airport shuttle", "Late check-out"};
-    public static String addNeeds = needs[RANDOM.nextInt(needs.length)];
-
-    public static String checkIn = "2018-01-01";
-    public static String checkOut = "2028-01-01";
 
     // Intializing the headers and value we are taking via Config file
     public static HashMap<String, String> getHeaders() {
@@ -41,4 +30,32 @@ public class Commons {
         return headersMap;
     }
 
+    public static String getFirstName() {
+        return faker.name().firstName();
+    }
+
+    public static String getLastName() {
+        return faker.name().firstName();
+    }
+
+    public static int getTotalprice() {
+        return faker.number().numberBetween(0, 12);
+    }
+
+    public static String getAddNeeds() {
+        return needs[RANDOM.nextInt(needs.length)];
+    }
+
+
+    public static boolean getdepositPaid() {
+        return faker.bool().bool();
+    }
+
+    public static String getCheckIn() {
+        return Util.readConfig("checkin");
+    }
+
+    public static String getCheckOut() {
+        return Util.readConfig("checkout");
+    }
 }

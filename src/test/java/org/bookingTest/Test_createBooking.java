@@ -1,5 +1,6 @@
 package org.bookingTest;
 
+import Pojo.Postrequest.Booking;
 import Pojo.postResponse.CreateBookingResponse;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
@@ -23,23 +24,23 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 // This contains test cases for the post booking or Create booking
 public class Test_createBooking extends BaseTest {
 
-    Logger log = LogManager.getLogger(Test_createBooking.class);
-    Response response;
+    private Logger log = LogManager.getLogger(Test_createBooking.class);
+    private Response response;
     CreateBookingResponse createBookingResponse;
+    Booking booking;
 
 
     @Test(description = "Post request for creating the booking ")
     public void tc01_createbooking() throws IOException {
         log.info(" **** tc01_createbooking() *****");
-        ExtentTestManager.getTest().info("tc01_createbooking Testing ");
         ExtentTestManager.getTest().info(" validating the status of tc01_createbooking");
         response = HttpsMethods.post();
         log.info(" POST bODY is " + response.getBody().asPrettyString());
         ExtentTestManager.getTest().info("RESPONSE STATUS CODE " + response.getStatusCode());
-        ExtentTestManager.getTest().info(" RESPONSE BODY is " + response.getBody());
+        ExtentTestManager.getTest().info(" RESPONSE BODY is " + response.getBody().asPrettyString());
         Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_OK);
         // Storing booking id
-        ExtentTestManager.getTest().info(" Booking id created " + response.jsonPath().get("bookingid"));
+        ExtentTestManager.getTest().info(" Booking id created >>>>" + response.jsonPath().get("bookingid"));
         Commons.bookingid = response.jsonPath().get("bookingid");
     }
 
@@ -73,7 +74,8 @@ public class Test_createBooking extends BaseTest {
         Assert.assertTrue(response.body().jsonPath().get("booking.depositpaid") instanceof Boolean);
     }
 
-    @Test(description = " This test case will validate every object as we have passed while creating the post request ")
+    @Test(description = " This test case will validate every object as we " +
+            "have passed while creating the post request ")
     public void tc05_validateBody() {
         createBookingResponse = response.as(CreateBookingResponse.class);
         String Response_bookingId = createBookingResponse.getBookingid();
@@ -87,12 +89,25 @@ public class Test_createBooking extends BaseTest {
         log.info(res_FN + "  " + res_LN + "  " + res_addNeed + "  " + res_depositpaid + "  ");
         ExtentTestManager.getTest().info(res_FN + " , " + res_LN + "  , " + res_addNeed + " , " + res_depositpaid + " ,  ");
 
-        Assert.assertEquals(res_FN, Commons.firstName);
-        Assert.assertEquals(res_LN, Commons.lastName);
-        Assert.assertEquals(res_addNeed, Commons.addNeeds);
-        Assert.assertEquals(res_depositpaid, Commons.depositpaid);
-        Assert.assertEquals(res_checkinDate, Commons.checkIn);
-        Assert.assertEquals(res_checkoutDates, Commons.checkOut);
+        try{
+            booking= HttpsMethods.booking;
+            System.out.println(booking.getFirstname());
+            System.out.println(booking.getLastname());
+            System.out.println(booking.getTotalprice());
+
+
+        }
+         catch (Exception e)
+         {
+             System.out.println(e.getLocalizedMessage());
+         }
+       // validating all body of Request and response
+        Assert.assertEquals(res_FN, booking.getFirstname());
+        Assert.assertEquals(res_LN, booking.getLastname());
+        Assert.assertEquals(res_addNeed, booking.getAdditionalneeds());
+        Assert.assertEquals(res_depositpaid, booking.isDepositpaid());
+        Assert.assertEquals(res_checkinDate, booking.getBookingdates().getCheckin());
+        Assert.assertEquals(res_checkoutDates, booking.getBookingdates().getCheckout());
 
     }
 }

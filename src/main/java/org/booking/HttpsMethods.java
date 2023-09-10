@@ -15,11 +15,13 @@ import static io.restassured.RestAssured.*;
 public class HttpsMethods {
     private static Logger log = LogManager.getLogger(HttpsMethods.class);
     static String token;
-    private static Bookingdates bookingDates = new Bookingdates(Commons.checkIn, Commons.checkOut);
+    public static Bookingdates bookingDates =
+            new Bookingdates(Commons.getCheckIn(), Commons.getCheckOut());
 
 
-    private static Booking booking =
-            new Booking(Commons.firstName, Commons.lastName, Commons.totalprice, Commons.depositpaid, bookingDates, Commons.addNeeds);
+    public static Booking booking =
+            new Booking(Commons.getFirstName(), Commons.getLastName(), Commons.getTotalprice(),
+                    Commons.getdepositPaid(), bookingDates, Commons.getAddNeeds());
 
 
     public static String authtoken() {
@@ -29,17 +31,11 @@ public class HttpsMethods {
         ExtentTestManager.getTest().info("authtoken END POINT IS " + Util.readConfig("baseUri") + Util.readConfig("authpath"));
         System.out.println();
         token = given().baseUri(Util.readConfig("baseUri")).headers(Commons.getHeaders()).
-                body(new File(System.getProperty("user.dir") + Commons.tokenJsonpath)).
+                body(new File(System.getProperty("user.dir") + Commons.tokenJsonfile)).
                 when().post(Util.readConfig("authpath")).jsonPath().get("token");
 
         return token;
     }
-
-
-  /*  public static Response getPing() {
-        return given().log().all().baseUri(Util.readConfig("baseUri")).when().
-                get(Util.readConfig("pingpath"));
-    }*/
 
     public static Response get(String path, String id) {
         //https://restful-booker.herokuapp.com/auth
@@ -68,10 +64,16 @@ public class HttpsMethods {
 
     public static Response put() {
         ExtentTestManager.getTest().
-                info(" URI " + Util.readConfig("baseUri") + "" + Util.readConfig("path") + Util.readConfig("bookingid"));
+                info(" URI " +
+                        Util.readConfig("baseUri") + "" +
+                        Util.readConfig("path") + Commons.bookingid);
         Commons.getHeaders().put("Cookie", "token=" + authtoken());
+        // need to change here the booking object
         ExtentTestManager.getTest().info(" Token is " + authtoken());
-        return given().headers(Commons.getHeaders()).baseUri(Util.readConfig("baseUri")).
+        //https://restful-booker.herokuapp.com/booking/11
+        ExtentTestManager.getTest().info(" Booking id is " + Commons.bookingid);
+        return given().headers(Commons.getHeaders()).
+                baseUri(Util.readConfig("baseUri")).
                 body(booking).
                 when().
                 put(Util.readConfig("path") + Commons.bookingid);

@@ -14,7 +14,7 @@ public class Test_editBooking extends BaseTest {
 
     Response response;
 
-    @Test
+    @Test(description = " Verify the status code ")
     public void tc01_validateEdit() {
         ExtentTestManager.getTest().info("tc01_editbooking");
         response = HttpsMethods.put();
@@ -25,7 +25,7 @@ public class Test_editBooking extends BaseTest {
         Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_OK);
     }
 
-    @Test
+    @Test(description = " Verify the body is not null ")
     public void tc02_validateEditBody() {
         log.info(" Validating the edit body and its object not be null ");
         ExtentTestManager.getTest().info(" tc02_validateEditBody " + response.getBody().asPrettyString());

@@ -7,7 +7,9 @@
             <class name="org.bookingTest.Test_createBooking"/>
             <class name="org.bookingTest.Test_getBooking"/>
             <class name="org.bookingTest.Test_editBooking"/>
+            <class name="org.bookingTest.Test_partialUpdate"/>
             <class name="org.bookingTest.Test_deleteBooking"/>
+            <class name="org.bookingTest.Test_partialupdate_Negative"/>
         </classes>
     </test>
 

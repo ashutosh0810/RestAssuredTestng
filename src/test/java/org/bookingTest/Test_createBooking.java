@@ -49,7 +49,7 @@ public class Test_createBooking extends BaseTest {
         log.info("tc02_validateSchema ");
         ExtentTestManager.getTest().info(" Validating the entire schema ");
         response.then().assertThat().body("bookingid", Matchers.notNullValue());
-        response.then().assertThat().body(matchesJsonSchemaInClasspath("postBookingresponse.json"));
+        response.then().assertThat().body(matchesJsonSchemaInClasspath("jsonBody/postBookingresponse.json"));
     }
 
     @Test(description = " To validate the header of response ")

@@ -5,9 +5,10 @@ import Pojo.Postrequest.Booking;
 import Pojo.Postrequest.Bookingdates;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.testng.annotations.Test;
 import reporting.ExtentTestManager;
 
-
+import javax.imageio.plugins.tiff.ExifGPSTagSet;
 import java.io.File;
 
 import static io.restassured.RestAssured.*;
@@ -17,19 +18,16 @@ public class HttpsMethods {
     static String token;
     public static Bookingdates bookingDates =
             new Bookingdates(Commons.getCheckIn(), Commons.getCheckOut());
-
-
     public static Booking booking =
             new Booking(Commons.getFirstName(), Commons.getLastName(), Commons.getTotalprice(),
                     Commons.getdepositPaid(), bookingDates, Commons.getAddNeeds());
 
-
     public static String authtoken() {
-
         //https://restful-booker.herokuapp.com/ping
         log.info(Util.readConfig("baseUri") + Util.readConfig("authpath"));
         ExtentTestManager.getTest().info("authtoken END POINT IS " + Util.readConfig("baseUri") + Util.readConfig("authpath"));
-        System.out.println();
+        ExtentTestManager.getTest().info(System.getProperty("user.dir") + Commons.tokenJsonfile);
+        System.out.println(" PATH IS " + System.getProperty("user.dir") + Commons.tokenJsonfile);
         token = given().baseUri(Util.readConfig("baseUri")).headers(Commons.getHeaders()).
                 body(new File(System.getProperty("user.dir") + Commons.tokenJsonfile)).
                 when().post(Util.readConfig("authpath")).jsonPath().get("token");
@@ -41,7 +39,6 @@ public class HttpsMethods {
         //https://restful-booker.herokuapp.com/auth
         //https://restful-booker.herokuapp.com/booking/939
         //https://restful-booker.herokuapp.com/booking
-
         log.info(" end point is " +
                 Util.readConfig("baseUri") + path + id);
         ExtentTestManager.getTest().info(" GET end point is " +
@@ -86,6 +83,28 @@ public class HttpsMethods {
                         Util.readConfig("baseUri") + "" + Util.readConfig("path") + id);
         System.out.println(Commons.getHeaders());
         return given().baseUri(Util.readConfig("baseUri")).headers(Commons.getHeaders()).when().delete(Util.readConfig("path") + id);
+
+    }
+
+    public static Response patch(int id) {
+
+        ExtentTestManager.getTest().info(" PATCH URL is " +
+                Util.readConfig("baseUri") + Util.readConfig("path") + id);
+        System.out.println(Commons.getHeaders());
+        log.info(" PATCH URL is " +
+                Util.readConfig("baseUri") + Util.readConfig("path") + id);
+        String filePath;
+        try {
+            filePath = System.getProperty("user.dir") +
+                    Util.readConfig("partial_editFile");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(" Patch body path is " + filePath);
+
+        return given().baseUri(Util.readConfig("baseUri")).
+                headers(Commons.getHeaders()).body(new File(filePath)).
+                when().patch(Util.readConfig("path")+id);
 
     }
 

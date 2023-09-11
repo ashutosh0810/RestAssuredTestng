@@ -14,7 +14,7 @@ import org.testng.annotations.Listeners;
 public class Test_deleteBooking extends BaseTest {
     Response response;
 
-    @Test
+    @Test(description = " Verify status code post deletion is 201")
     public void tc01_deleteBooking() {
         response = HttpsMethods.delete(String.valueOf(Commons.bookingid));
         log.info(" Delete method body is " + response.getBody().asPrettyString());

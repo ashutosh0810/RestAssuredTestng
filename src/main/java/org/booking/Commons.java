@@ -8,14 +8,12 @@ import java.util.Random;
 // This class will store the common values and constant values that can be used across the framework
 public class Commons {
 
-
-    // Using faker class for getiing the random values ;
-
+    // Using faker class for geting the random values ;
     private static Faker faker = new Faker();
     private static final Random RANDOM = new Random();
 
     public static String configFilepath = "src\\main\\resources\\testConfig.properties";
-    public static String tokenJsonfile = "\\src\\main\\resources\\token.json";
+    public static String tokenJsonfile = "\\src\\main\\resources\\jsonBody\\Authtoken.json";
 
     public static int bookingid;
 
@@ -46,7 +44,6 @@ public class Commons {
         return needs[RANDOM.nextInt(needs.length)];
     }
 
-
     public static boolean getdepositPaid() {
         return faker.bool().bool();
     }
@@ -58,4 +55,6 @@ public class Commons {
     public static String getCheckOut() {
         return Util.readConfig("checkout");
     }
+
+
 }

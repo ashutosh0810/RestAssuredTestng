@@ -1,6 +1,5 @@
 package reporting;
 
-
 import com.aventstack.extentreports.Status;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,18 +21,13 @@ public class TestListeners implements ITestListener {
         ExtentManager.getInstance().flush();
     }
 
-
     public void onTestStart(ITestResult result) {
         System.out.println(("*** Running test method " + result.getMethod().getMethodName() + "..."));
         ExtentTestManager.startTest(result.getMethod().getMethodName());
     }
 
     public void onTestSuccess(ITestResult result) {
-        //System.out.println("*** Executed " + result.getMethod().getMethodName() + " test successfully...");
-        ExtentTestManager.getTest().info(result.getMethod().getDescription());
-        ExtentTestManager.getTest().log(Status.PASS, "Test passed" + result.getMethod().getDescription());
-
-
+        ExtentTestManager.getTest().log(Status.PASS, "Test passed" + result.getMethod().getMethodName() + " Description is " + result.getMethod().getDescription());
 
     }
 

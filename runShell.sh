@@ -1,4 +1,3 @@
-currentDir = pwd
-echo $currentDir
+pwd
 mvn clean install
 

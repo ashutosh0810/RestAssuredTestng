@@ -20,8 +20,10 @@ public class Util {
     public static String readConfig(String key)  {
 
         try {
-            fis = new FileInputStream(new File(Commons.configFilepath));
+            // streaming the file bytes
+            fis = new FileInputStream(Commons.configFilepath);
             properties = new Properties();
+            //loading the file
             properties.load(fis);
         } catch (Exception e) {
             throw new RuntimeException(e);

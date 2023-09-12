@@ -9,7 +9,7 @@
             <class name="org.bookingTest.Test_editBooking"/>
             <class name="org.bookingTest.Test_partialUpdate"/>
             <class name="org.bookingTest.Test_deleteBooking"/>
-            <class name="org.bookingTest.Test_partialupdate_Negative"/>
+            <class name="org.bookingTest.Test_negativeTC"/>
         </classes>
     </test>
 

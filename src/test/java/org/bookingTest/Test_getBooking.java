@@ -42,7 +42,7 @@ public class Test_getBooking extends BaseTest {
     }
 
     @Test(description = " To validate the  404 NOT FOUND status code for wrong booking ")
-    public void tc02_Neg_getbookingId() throws IOException {
+    public void tc03_Neg_getbookingId() throws IOException {
         ExtentTestManager.getTest().info(" tc02_Neg_getbookingId");
         response = HttpsMethods.get(Util.readConfig("path"), "drew");
         ExtentTestManager.getTest().info(" Body is " + response.getBody().asPrettyString());

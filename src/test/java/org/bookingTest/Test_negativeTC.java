@@ -9,10 +9,10 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import reporting.ExtentTestManager;
 
-public class Test_partialupdate_Negative {
+public class Test_negativeTC {
     // This class will verify the status for the deleted booking id and it should be 404 Not found
 
-    @Test(description = "Validate deleted booking should not return other status than 405")
+    @Test(description = "Validate deleted booking id should not be used for the edit ")
     public void tc01_Neg_PartialUpdate() {
         Response response = HttpsMethods.patch(Commons.bookingid);
         ExtentTestManager.getTest().info(" Validating deleted booking id >>> " + response.getStatusCode());

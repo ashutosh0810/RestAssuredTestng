@@ -16,6 +16,7 @@ import static io.restassured.RestAssured.*;
 public class HttpsMethods {
     private static Logger log = LogManager.getLogger(HttpsMethods.class);
     static String token;
+   // public static Response response;
     public static Bookingdates bookingDates =
             new Bookingdates(Commons.getCheckIn(), Commons.getCheckOut());
     public static Booking booking =
@@ -49,27 +50,30 @@ public class HttpsMethods {
                 when().
                 get(path + id);
 
-
     }
 
     public static Response post() {
         ExtentTestManager.getTest().info(" URI >>>" +
                 Util.readConfig("baseUri") + Util.readConfig("path"));
+
         return given().log().all().
                 headers(Commons.getHeaders()).
                 body(booking).
                 when().log().all().
                 post(Util.readConfig("path"));
 
+
     }
 
     public static Response put() {
         ExtentTestManager.getTest().
                 info(" URI " +
-                        Util.readConfig("baseUri") + "" +
+                        Util.readConfig("baseUri") + " " +
                         Util.readConfig("path") + Commons.bookingid);
         Commons.getHeaders().put("Cookie", "token=" + authtoken());
-        // need to change here the booking object
+        // need to change here the booking object to new values
+        booking = new Booking(Commons.getFirstName(), Commons.getLastName(), Commons.getTotalprice(),
+                Commons.getdepositPaid(), bookingDates, Commons.getAddNeeds());
         ExtentTestManager.getTest().info(" Token is " + authtoken());
         ExtentTestManager.getTest().info(" Booking id is " + Commons.bookingid);
         return given().

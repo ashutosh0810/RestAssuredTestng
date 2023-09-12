@@ -94,8 +94,6 @@ public class Test_createBooking extends BaseTest {
             System.out.println(booking.getFirstname());
             System.out.println(booking.getLastname());
             System.out.println(booking.getTotalprice());
-
-
         }
          catch (Exception e)
          {

@@ -1,5 +1,7 @@
 package org.bookingTest;
 
+// This test case if for put request
+
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.booking.HttpsMethods;
@@ -20,7 +22,7 @@ public class Test_editBooking extends BaseTest {
         response = HttpsMethods.put();
         log.info(" tc01_validateEdit " + response.getBody().asPrettyString());
         log.info(" PUT BODY IS " + response.getBody().asPrettyString());
-        // logging the body
+        // logging the body in extent report
         ExtentTestManager.getTest().info("tc01_validateEdit" + response.getBody().asPrettyString());
         Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_OK);
     }

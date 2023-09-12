@@ -1,5 +1,7 @@
 package org.bookingTest;
 
+// This test case if for  Get method generic for all types of get
+
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.booking.Commons;
@@ -23,9 +25,9 @@ public class Test_getBooking extends BaseTest {
     @Test(description = " To validate the status code of get all booking ")
     public void tc01_getAllbookingId() throws IOException {
         ExtentTestManager.getTest().info(" Get all booking body is");
-
         response = HttpsMethods.get(Util.readConfig("path"), "");
-       // log.info(" response is " + response.getBody().asPrettyString());
+        // Logging body in log report
+        log.info(" response is " + response.getBody().asPrettyString());
         ExtentTestManager.getTest().info(response.getBody().asPrettyString());
         Assert.assertEquals(response.statusCode(), HttpStatus.SC_OK);
     }

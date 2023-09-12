@@ -13,7 +13,7 @@ import org.testng.annotations.Listeners;
 @Listeners(TestListeners.class)
 public class Test_deleteBooking extends BaseTest {
     Response response;
-
+    // This is to validate the delete method
     @Test(description = " Verify status code post deletion is 201")
     public void tc01_deleteBooking() {
         response = HttpsMethods.delete(String.valueOf(Commons.bookingid));

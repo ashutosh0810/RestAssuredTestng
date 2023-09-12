@@ -28,9 +28,11 @@ public class HttpsMethods {
         ExtentTestManager.getTest().info("authtoken END POINT IS " + Util.readConfig("baseUri") + Util.readConfig("authpath"));
         ExtentTestManager.getTest().info(System.getProperty("user.dir") + Commons.tokenJsonfile);
         System.out.println(" PATH IS " + System.getProperty("user.dir") + Commons.tokenJsonfile);
-        token = given().baseUri(Util.readConfig("baseUri")).headers(Commons.getHeaders()).
+        token = given().
+                headers(Commons.getHeaders()).
                 body(new File(System.getProperty("user.dir") + Commons.tokenJsonfile)).
-                when().post(Util.readConfig("authpath")).jsonPath().get("token");
+                when().
+                post(Util.readConfig("authpath")).jsonPath().get("token");
 
         return token;
     }
@@ -43,19 +45,21 @@ public class HttpsMethods {
                 Util.readConfig("baseUri") + path + id);
         ExtentTestManager.getTest().info(" GET end point is " +
                 Util.readConfig("baseUri") + path + id);
-        return
-                given().log().all().baseUri(Util.readConfig("baseUri")).
-                        when().get(path + id);
+        return given().log().all().
+                when().
+                get(path + id);
+
 
     }
 
     public static Response post() {
         ExtentTestManager.getTest().info(" URI >>>" +
                 Util.readConfig("baseUri") + Util.readConfig("path"));
-        return given().log().all().baseUri(Util.readConfig("baseUri")).
+        return given().log().all().
                 headers(Commons.getHeaders()).
                 body(booking).
-                when().log().all().post(Util.readConfig("path"));
+                when().log().all().
+                post(Util.readConfig("path"));
 
     }
 
@@ -67,10 +71,9 @@ public class HttpsMethods {
         Commons.getHeaders().put("Cookie", "token=" + authtoken());
         // need to change here the booking object
         ExtentTestManager.getTest().info(" Token is " + authtoken());
-        //https://restful-booker.herokuapp.com/booking/11
         ExtentTestManager.getTest().info(" Booking id is " + Commons.bookingid);
-        return given().headers(Commons.getHeaders()).
-                baseUri(Util.readConfig("baseUri")).
+        return given().
+                headers(Commons.getHeaders()).
                 body(booking).
                 when().
                 put(Util.readConfig("path") + Commons.bookingid);
@@ -82,7 +85,10 @@ public class HttpsMethods {
                 info(" URI IS >>> " +
                         Util.readConfig("baseUri") + "" + Util.readConfig("path") + id);
         System.out.println(Commons.getHeaders());
-        return given().baseUri(Util.readConfig("baseUri")).headers(Commons.getHeaders()).when().delete(Util.readConfig("path") + id);
+        return given().
+                headers(Commons.getHeaders()).
+                when().
+                delete(Util.readConfig("path") + id);
 
     }
 
@@ -102,9 +108,11 @@ public class HttpsMethods {
         }
         System.out.println(" Patch body path is " + filePath);
 
-        return given().baseUri(Util.readConfig("baseUri")).
-                headers(Commons.getHeaders()).body(new File(filePath)).
-                when().patch(Util.readConfig("path")+id);
+        return given().
+                headers(Commons.getHeaders()).
+                body(new File(filePath)).
+                when().
+                patch(Util.readConfig("path") + id);
 
     }
 

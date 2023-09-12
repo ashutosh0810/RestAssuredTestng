@@ -1,6 +1,7 @@
 package org.bookingTest;
 
 import com.aventstack.extentreports.Status;
+import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
@@ -26,18 +27,19 @@ import java.util.ResourceBundle;
 // This class is base test and initialize the log folders
 public class BaseTest {
     Logger log = LogManager.getLogger(BaseTest.class.getName());
-    HttpsMethods methods;
 
     @BeforeSuite
     public void setUp() {
-        methods = new HttpsMethods();
+        RestAssured.baseURI = Util.readConfig("baseUri");
+        ExtentTestManager.startTest("start");
+        ExtentTestManager.getTest().info("Starting Testing And Reporting  ");
+        ExtentTestManager.getTest().info(RestAssured.baseURI);
         File logDir = new File("logs");
         if (!logDir.exists()) {
             log.info(" Creating logging directory ");
             logDir.mkdir();
         }
-        ExtentTestManager.startTest("start");
-        ExtentTestManager.getTest().info("Starting Testing And Reporting  ");
+
     }
 
     @BeforeMethod
@@ -47,8 +49,6 @@ public class BaseTest {
         log.info(" ****** CHECKING HEALTH ********");
         Response response = HttpsMethods.get(Util.readConfig("pingpath"), "");
         HttpsMethods.get(Util.readConfig("authpath"), "");
-        int status = response.getStatusCode();
-        int stat = HttpStatus.SC_OK;
         if (response.statusCode() == HttpStatus.SC_CREATED) {
             ExtentTestManager.getTest().log(Status.PASS, " *** PING IS HEALTHY ****");
             log.info(" ****** CHECKING HEALTH PASS  ******** ");
@@ -56,7 +56,6 @@ public class BaseTest {
             ExtentTestManager.getTest().log(Status.FAIL, " Not healthy");
             log.fatal(" PING NOT HEALTHY ");
         }
-        // Assert.assertEquals(HttpsMethods.get(Util.readConfig("pingpath"), "").statusCode(), HttpStatus.SC_CREATED);
 
 
     }

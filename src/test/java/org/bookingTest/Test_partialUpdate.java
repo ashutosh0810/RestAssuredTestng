@@ -1,5 +1,7 @@
 package org.bookingTest;
 
+// This test case if for Patch request
+
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;

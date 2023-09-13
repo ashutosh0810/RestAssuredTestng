@@ -10,6 +10,7 @@ import org.booking.Commons;
 import org.booking.HttpsMethods;
 import org.hamcrest.Matchers;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import reporting.ExtentTestManager;
 import reporting.TestListeners;
 import org.testng.annotations.Listeners;
@@ -29,10 +30,16 @@ public class Test_createBooking extends BaseTest {
     CreateBookingResponse createBookingResponse;
     Booking booking;
 
+    @BeforeMethod
+    public void info() {
+        ExtentTestManager.assignAuthor("Ashutosh");
+        ExtentTestManager.testCategory("Regression");
+    }
 
     @Test(description = "Post request for creating the booking ")
     public void tc01_createbooking() throws IOException {
         log.info(" **** tc01_createbooking() *****");
+
         ExtentTestManager.getTest().info(" validating the status of tc01_createbooking");
         response = HttpsMethods.post();
         log.info(" POST bODY is " + response.getBody().asPrettyString());
@@ -54,6 +61,7 @@ public class Test_createBooking extends BaseTest {
 
     @Test(description = " To validate the header of response ")
     public void tc03_validateHeaders() {
+        ExtentTestManager.testCategory("Regression");
         log.info(" tc03_validateHeaders To validate the header of response ");
         log.info(" Headers are >>>> " + response.getHeaders());
         ExtentTestManager.getTest().info(" Header info for create booking" + response.getHeaders());
@@ -89,17 +97,15 @@ public class Test_createBooking extends BaseTest {
         log.info(res_FN + "  " + res_LN + "  " + res_addNeed + "  " + res_depositpaid + "  ");
         ExtentTestManager.getTest().info(res_FN + " , " + res_LN + "  , " + res_addNeed + " , " + res_depositpaid + " ,  ");
 
-        try{
-            booking= HttpsMethods.booking;
+        try {
+            booking = HttpsMethods.booking;
             System.out.println(booking.getFirstname());
             System.out.println(booking.getLastname());
             System.out.println(booking.getTotalprice());
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
         }
-         catch (Exception e)
-         {
-             System.out.println(e.getLocalizedMessage());
-         }
-       // validating all body of Request and response
+        // validating all body of Request and response
         Assert.assertEquals(res_FN, booking.getFirstname());
         Assert.assertEquals(res_LN, booking.getLastname());
         Assert.assertEquals(res_addNeed, booking.getAdditionalneeds());

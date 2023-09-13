@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import org.booking.Commons;
 import org.booking.HttpsMethods;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import reporting.ExtentTestManager;
@@ -17,8 +18,15 @@ import reporting.TestListeners;
 @Listeners(TestListeners.class)
 
 public class Test_partialUpdate {
+
     Response response;
     Logger log = LogManager.getLogger(Test_partialUpdate.class);
+    @BeforeMethod
+    public void info()
+    {
+        ExtentTestManager.assignAuthor("Ashutosh");
+        ExtentTestManager.testCategory("Negative");
+    }
 
     @Test(description = " Validate that user can update the booking partially ")
     public void tc01_updateNameonly() {

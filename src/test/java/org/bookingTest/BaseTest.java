@@ -11,13 +11,10 @@ import org.booking.Util;
 import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.*;
 import reporting.ExtentManager;
 import reporting.ExtentTestManager;
 import reporting.TestListeners;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Listeners;
 
 import java.io.File;
 import java.net.http.HttpResponse;
@@ -56,9 +53,12 @@ public class BaseTest {
             ExtentTestManager.getTest().log(Status.FAIL, " Not healthy");
             log.fatal(" PING NOT HEALTHY ");
         }
-
-
     }
 
+    @AfterSuite
+    public void tearDown()
+    {
+        ExtentTestManager.endTest();
+    }
 
 }

@@ -5,6 +5,7 @@ import org.apache.http.HttpStatus;
 import org.booking.Commons;
 import org.booking.HttpsMethods;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import reporting.ExtentTestManager;
 import reporting.TestListeners;
@@ -13,6 +14,12 @@ import org.testng.annotations.Listeners;
 @Listeners(TestListeners.class)
 public class Test_deleteBooking extends BaseTest {
     Response response;
+    @BeforeMethod
+    public void info()
+    {
+        ExtentTestManager.assignAuthor("Ashutosh");
+        ExtentTestManager.testCategory("Regression");
+    }
     // This is to validate the delete method
     @Test(description = " Verify status code post deletion is 201")
     public void tc01_deleteBooking() {

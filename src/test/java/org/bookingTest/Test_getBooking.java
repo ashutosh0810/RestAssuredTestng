@@ -7,8 +7,8 @@ import org.apache.http.HttpStatus;
 import org.booking.Commons;
 import org.booking.HttpsMethods;
 import org.booking.Util;
-import org.codehaus.groovy.transform.stc.ExtensionMethodNode;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import reporting.ExtentTestManager;
 import reporting.TestListeners;
 import org.testng.annotations.Listeners;
@@ -21,9 +21,16 @@ import static io.restassured.RestAssured.given;
 @Listeners(TestListeners.class)
 public class Test_getBooking extends BaseTest {
     Response response;
+    @BeforeMethod
+    public void info()
+    {
+        ExtentTestManager.assignAuthor("Ashutosh");
+        ExtentTestManager.testCategory("Regression");
+    }
 
     @Test(description = " To validate the status code of get all booking ")
     public void tc01_getAllbookingId() throws IOException {
+        ExtentTestManager.getTest().assignCategory("Regression ");
         ExtentTestManager.getTest().info(" Get all booking body is");
         response = HttpsMethods.get(Util.readConfig("path"), "");
         // Logging body in log report

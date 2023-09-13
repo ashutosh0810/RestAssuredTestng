@@ -6,11 +6,17 @@ import org.apache.http.HttpStatus;
 import org.booking.Commons;
 import org.booking.HttpsMethods;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import reporting.ExtentTestManager;
 
 public class Test_negativeTC {
     // This class will verify the status for the deleted booking id and it should be 404 Not found
+    @BeforeMethod
+    public void info() {
+        ExtentTestManager.assignAuthor("Ashutosh");
+        ExtentTestManager.testCategory("Negative");
+    }
 
     @Test(description = "Validate deleted booking id should not be used for the edit ")
     public void tc01_Neg_PartialUpdate() {

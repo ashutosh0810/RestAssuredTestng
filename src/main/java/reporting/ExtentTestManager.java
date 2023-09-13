@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class ExtentTestManager {
     static Map<Integer, ExtentTest> extentTestMap = new HashMap<Integer, ExtentTest>();
-    static ExtentReports extent = ExtentManager.getInstance();
+    static ExtentReports extentReports = ExtentManager.getInstance();
 
     public static synchronized ExtentTest getTest() {
         return (ExtentTest) extentTestMap.get((int) (long) (Thread.currentThread().getId()));
@@ -16,12 +16,20 @@ public class ExtentTestManager {
 
     public static synchronized void endTest() {
 
-        extent.flush();
+        extentReports.flush();
     }
 
     public static synchronized ExtentTest startTest(String testName) {
-        ExtentTest test = extent.createTest(testName);
-        extentTestMap.put((int) (long) (Thread.currentThread().getId()), test);
-        return test;
+        ExtentTest extentTest = extentReports.createTest(testName);
+        extentTestMap.put((int) (long) (Thread.currentThread().getId()), extentTest);
+        return extentTest;
+    }
+    public static ExtentTest testCategory(String category) {
+        ExtentTestManager.getTest().assignAuthor("Ashutosh");
+        return ExtentTestManager.getTest().assignCategory(category);
+    }
+
+    public static ExtentTest assignAuthor(String category) {
+        return ExtentTestManager.getTest().assignAuthor("Ashutosh");
     }
 }

@@ -1,6 +1,8 @@
 package org.booking;
 
+import com.aventstack.extentreports.ExtentTest;
 import com.github.javafaker.Faker;
+import reporting.ExtentTestManager;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -55,6 +57,7 @@ public class Commons {
     public static String getCheckOut() {
         return Util.readConfig("checkout");
     }
+
 
 
 }

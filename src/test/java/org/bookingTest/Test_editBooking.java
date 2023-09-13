@@ -4,8 +4,10 @@ package org.bookingTest;
 
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
+import org.booking.Commons;
 import org.booking.HttpsMethods;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import reporting.ExtentTestManager;
 import reporting.TestListeners;
@@ -15,6 +17,12 @@ import org.testng.annotations.Listeners;
 public class Test_editBooking extends BaseTest {
 
     Response response;
+    @BeforeMethod
+    public void info()
+    {
+        ExtentTestManager.assignAuthor("Ashutosh");
+        ExtentTestManager.testCategory("Regression");
+    }
 
     @Test(description = " Verify the status code ")
     public void tc01_validateEdit() {

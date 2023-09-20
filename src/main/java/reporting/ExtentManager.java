@@ -21,14 +21,12 @@ public class ExtentManager {
     private static String reportFilepath = System.getProperty("user.dir") + fileSeperator + "TestReport";
     private static String reportFileLocation = reportFilepath + fileSeperator + reportFilename.concat(timeStamp) + ".html";
 
-
     public static ExtentReports getInstance() {
         if (extentReports == null) {
             createInstance();
         }
         return extentReports;
     }
-
     public static ExtentReports createInstance() {
         String fileName = getReportPath(reportFilepath);
         ExtentSparkReporter extentSparkReporter = new ExtentSparkReporter(fileName);
@@ -37,7 +35,6 @@ public class ExtentManager {
 
         extentSparkReporter.config().setDocumentTitle(reportFilename);
         extentSparkReporter.config().setTheme(Theme.DARK);
-
         extentSparkReporter.config().setEncoding("utf-8");
         extentSparkReporter.config().setTimelineEnabled(true);
         extentSparkReporter.config().setTimeStampFormat("EEEE, MMMM dd, yyyy, hh:mm a '('zzz')'");

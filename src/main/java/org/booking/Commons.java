@@ -13,7 +13,6 @@ public class Commons {
     // Using faker class for geting the random values ;
     private static Faker faker = new Faker();
     private static final Random RANDOM = new Random();
-
     public static String configFilepath = "src\\main\\resources\\testConfig.properties";
     public static String tokenJsonfile = "\\src\\main\\resources\\jsonBody\\Authtoken.json";
 

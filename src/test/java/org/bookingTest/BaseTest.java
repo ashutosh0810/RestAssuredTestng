@@ -56,8 +56,8 @@ public class BaseTest {
     }
 
     @AfterSuite
-    public void tearDown()
-    {
+    public void tearDown() {
+
         ExtentTestManager.endTest();
     }
 
